@@ -1,6 +1,7 @@
 package com.company;
 
 import java.security.InvalidParameterException;
+import java.util.function.*;
 
 public class Calculator {
 
@@ -10,14 +11,13 @@ public class Calculator {
     BinaryOperator<Integer> minus = (x, y) -> x - y;
     BinaryOperator<Integer> multiply = (x, y) -> x * y;
     BinaryOperator<Integer> devide = (x, y) -> {
-        /**
-         * Ошибка деления на ноль. Обработка этой ошибка указана ниже
-         */
-        if (y == 0){
-            throw new InvalidParameterException("Деление на 0");
+        // Обрабатываем ошибка деления на 0
+        try {
+            return x / y;
+        } catch (ArithmeticException e) {
+            System.out.println("Произошла ошибка деления на ноль");
+            return 0;
         }
-
-        return x / y;
     };
 
     UnaryOperator<Integer> pow = x -> x * x;
